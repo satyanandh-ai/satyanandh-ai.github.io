@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Satyanand | AI/ML Engineer in Training</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #080c14;
+            --surface: #0d1520;
+            --surface2: #111d2e;
+            --border: rgba(56, 139, 253, 0.15);
+            --blue: #388bfd;
+            --blue-dim: rgba(56, 139, 253, 0.12);
+            --green: #3fb950;
+            --green-dim: rgba(63, 185, 80, 0.12);
+            --amber: #d29922;
+            --amber-dim: rgba(210, 153, 34, 0.12);
+            --purple: #bc8cff;
+            --text: #e6edf3;
+            --text-muted: #7d8590;
+            --text-dim: #4d5566;
+            --mono: 'Space Mono', monospace;
+            --sans: 'DM Sans', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--sans);
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Grid background */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(56, 139, 253, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(56, 139, 253, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .page {
+            position: relative;
+            z-index: 1;
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem 5rem;
+        }
+
+        /* ── TOP BAR ── */
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 4rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .topbar-logo {
+            font-family: var(--mono);
+            font-size: 0.85rem;
+            color: var(--blue);
+            letter-spacing: 0.08em;
+        }
+
+        .topbar-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-family: var(--mono);
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--green);
+            box-shadow: 0 0 8px var(--green);
+            animation: pulse 2.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        /* ── HERO ── */
+        .hero {
+            margin-bottom: 4rem;
+        }
+
+        .hero-label {
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            color: var(--blue);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .hero-label::before {
+            content: '';
+            display: block;
+            width: 24px;
+            height: 1px;
+            background: var(--blue);
+        }
+
+        .hero-name {
+            font-family: var(--mono);
+            font-size: clamp(2.5rem, 7vw, 4.5rem);
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-name span {
+            color: var(--blue);
+        }
+
+        .hero-title {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            font-weight: 300;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-desc {
+            max-width: 560px;
+            color: #8d96a0;
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            font-family: var(--mono);
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        .hero-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        /* ── JOURNEY BANNER ── */
+        .journey-banner {
+            background: var(--green-dim);
+            border: 1px solid rgba(63, 185, 80, 0.25);
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 3.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .journey-icon {
+            font-size: 1.4rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .journey-text h3 {
+            font-family: var(--mono);
+            font-size: 0.85rem;
+            color: var(--green);
+            margin-bottom: 0.25rem;
+            letter-spacing: 0.05em;
+        }
+
+        .journey-text p {
+            font-size: 0.9rem;
+            color: #8d96a0;
+            line-height: 1.6;
+        }
+
+        /* ── SECTIONS ── */
+        section {
+            margin-bottom: 3.5rem;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-header h2 {
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .section-header::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* ── STATS ── */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        @media (min-width: 560px) {
+            .stats-grid { grid-template-columns: repeat(4, 1fr); }
+        }
+
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.25rem 1rem;
+            text-align: center;
+            transition: border-color 0.2s, transform 0.2s;
+        }
+
+        .stat-card:hover {
+            border-color: rgba(56, 139, 253, 0.4);
+            transform: translateY(-3px);
+        }
+
+        .stat-val {
+            font-family: var(--mono);
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--blue);
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        /* ── SKILLS ── */
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+        }
+
+        .skill {
+            font-family: var(--mono);
+            font-size: 0.78rem;
+            padding: 0.4rem 0.85rem;
+            border-radius: 6px;
+            border: 1px solid;
+            transition: transform 0.2s;
+        }
+
+        .skill:hover { transform: translateY(-2px); }
+
+        .skill-learning {
+            color: var(--blue);
+            border-color: rgba(56, 139, 253, 0.35);
+            background: var(--blue-dim);
+        }
+
+        .skill-soon {
+            color: var(--text-dim);
+            border-color: rgba(77, 85, 102, 0.4);
+            background: transparent;
+        }
+
+        .skills-legend {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        .skills-legend span {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .dot-blue { width: 7px; height: 7px; border-radius: 50%; background: var(--blue); display: inline-block; }
+        .dot-gray { width: 7px; height: 7px; border-radius: 50%; background: var(--text-dim); display: inline-block; }
+
+        /* ── ROADMAP ── */
+        .roadmap {
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .roadmap-item {
+            display: grid;
+            grid-template-columns: 110px 1fr;
+            gap: 1rem;
+            align-items: start;
+            padding: 1rem 1.25rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            transition: border-color 0.2s;
+        }
+
+        .roadmap-item:hover { border-color: rgba(56, 139, 253, 0.3); }
+
+        .roadmap-item.active {
+            border-color: rgba(63, 185, 80, 0.35);
+            background: linear-gradient(135deg, var(--surface) 0%, rgba(63, 185, 80, 0.04) 100%);
+        }
+
+        .roadmap-time {
+            font-family: var(--mono);
+            font-size: 0.72rem;
+            color: var(--text-dim);
+            padding-top: 2px;
+        }
+
+        .roadmap-item.active .roadmap-time { color: var(--green); }
+
+        .roadmap-content h4 {
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.2rem;
+        }
+
+        .roadmap-content p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+        }
+
+        .badge {
+            display: inline-block;
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            margin-left: 0.5rem;
+            vertical-align: middle;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .badge-active {
+            background: rgba(63, 185, 80, 0.2);
+            color: var(--green);
+            border: 1px solid rgba(63, 185, 80, 0.4);
+        }
+
+        .badge-planned {
+            background: rgba(77, 85, 102, 0.2);
+            color: var(--text-dim);
+            border: 1px solid rgba(77, 85, 102, 0.3);
+        }
+
+        /* ── PROJECTS ── */
+        .projects-grid {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .project-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: border-color 0.2s, transform 0.2s;
+            position: relative;
+        }
+
+        .project-card:hover {
+            border-color: rgba(56, 139, 253, 0.4);
+            transform: translateY(-3px);
+        }
+
+        .project-card.live {
+            border-color: rgba(63, 185, 80, 0.3);
+        }
+
+        .project-card.live:hover {
+            border-color: rgba(63, 185, 80, 0.6);
+        }
+
+        .project-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .project-name {
+            font-family: var(--mono);
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .project-status {
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            white-space: nowrap;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            flex-shrink: 0;
+        }
+
+        .status-live {
+            background: rgba(63, 185, 80, 0.15);
+            color: var(--green);
+            border: 1px solid rgba(63, 185, 80, 0.4);
+        }
+
+        .status-building {
+            background: rgba(210, 153, 34, 0.15);
+            color: var(--amber);
+            border: 1px solid rgba(210, 153, 34, 0.4);
+        }
+
+        .status-planned {
+            background: rgba(77, 85, 102, 0.15);
+            color: var(--text-dim);
+            border: 1px solid rgba(77, 85, 102, 0.3);
+        }
+
+        .project-desc {
+            font-size: 0.88rem;
+            color: #8d96a0;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            font-family: var(--mono);
+            font-size: 0.68rem;
+            padding: 0.2rem 0.55rem;
+            background: var(--surface2);
+            border: 1px solid rgba(77, 85, 102, 0.4);
+            border-radius: 4px;
+            color: var(--text-muted);
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-family: var(--mono);
+            font-size: 0.78rem;
+            color: var(--blue);
+            text-decoration: none;
+            transition: gap 0.2s;
+        }
+
+        .project-link:hover { gap: 0.6rem; }
+
+        .project-coming {
+            opacity: 0.5;
+        }
+
+        /* ── CONNECT ── */
+        .connect-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .connect-card {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 1.25rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .connect-card:hover {
+            border-color: rgba(56, 139, 253, 0.4);
+            transform: translateY(-2px);
+            color: var(--blue);
+        }
+
+        .connect-icon {
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .connect-info { flex: 1; }
+        .connect-name { font-weight: 600; font-size: 0.88rem; }
+        .connect-sub { font-size: 0.75rem; color: var(--text-muted); font-family: var(--mono); }
+
+        /* ── FOOTER ── */
+        footer {
+            margin-top: 5rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: gap;
+            gap: 1rem;
+        }
+
+        .footer-left {
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            color: var(--text-dim);
+        }
+
+        .footer-left span { color: var(--blue); }
+
+        .footer-quote {
+            font-size: 0.82rem;
+            color: var(--text-dim);
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+
+    <!-- TOP BAR -->
+    <div class="topbar">
+        <div class="topbar-logo">satyanandh-ai / portfolio</div>
+        <div class="topbar-status">
+            <div class="status-dot"></div>
+            actively learning
+        </div>
+    </div>
+
+    <!-- HERO -->
+    <div class="hero">
+        <div class="hero-label">AI/ML Engineer in Training</div>
+        <h1 class="hero-name">Satya<span>anandh</span></h1>
+        <p class="hero-title">B.Tech AIML · 2nd Year · Gannavaram, Andhra Pradesh</p>
+        <p class="hero-desc">
+            Starting my journey from zero and building towards becoming an AI/ML Engineer by 2027.
+            Every day I learn something, write code, and push it to GitHub.
+            Honest about where I am. Committed to where I'm going.
+        </p>
+        <div class="hero-meta">
+            <span>📍 Gannavaram, AP</span>
+            <span>🎓 B.Tech AIML · Year 2</span>
+            <span>📅 Started: March 2026</span>
+            <span>🎯 Goal: ML Engineer by 2027</span>
+        </div>
+    </div>
+
+    <!-- JOURNEY BANNER -->
+    <div class="journey-banner">
+        <div class="journey-icon">🌱</div>
+        <div class="journey-text">
+            <h3>Day 1 of My Public Journey</h3>
+            <p>
+                I'm documenting everything — the learning, the projects, the failures, and the wins.
+                This portfolio will grow as I grow. Check back in 6 months.
+            </p>
+        </div>
+    </div>
+
+    <!-- STATS -->
+    <section>
+        <div class="section-header"><h2>Current Stats</h2></div>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-val">1</span>
+                <div class="stat-label">Project Live</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-val">Y2S2</span>
+                <div class="stat-label">Current Year</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-val">~0</span>
+                <div class="stat-label">ML Projects<br><span style="font-size:0.7rem;color:var(--amber)">building soon</span></div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-val">∞</span>
+                <div class="stat-label">Motivation</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section>
+        <div class="section-header"><h2>Skills</h2></div>
+        <div class="skills-legend">
+            <span><i class="dot-blue"></i> Currently Learning</span>
+            <span><i class="dot-gray"></i> Coming Soon</span>
+        </div>
+        <div class="skills-grid">
+            <span class="skill skill-learning">Python</span>
+            <span class="skill skill-learning">Git & GitHub</span>
+            <span class="skill skill-learning">HTML & CSS</span>
+            <span class="skill skill-soon">NumPy</span>
+            <span class="skill skill-soon">Pandas</span>
+            <span class="skill skill-soon">Scikit-learn</span>
+            <span class="skill skill-soon">PyTorch</span>
+            <span class="skill skill-soon">Hugging Face</span>
+            <span class="skill skill-soon">Docker</span>
+            <span class="skill skill-soon">FastAPI</span>
+            <span class="skill skill-soon">SQL</span>
+            <span class="skill skill-soon">MLflow</span>
+        </div>
+    </section>
+
+    <!-- ROADMAP -->
+    <section>
+        <div class="section-header"><h2>My Roadmap</h2></div>
+        <div class="roadmap">
+            <div class="roadmap-item active">
+                <div class="roadmap-time">Mar – May 2026</div>
+                <div class="roadmap-content">
+                    <h4>Python Foundations <span class="badge badge-active">Now</span></h4>
+                    <p>CS50P course · data structures · OOP · pushing daily to GitHub</p>
+                </div>
+            </div>
+            <div class="roadmap-item">
+                <div class="roadmap-time">May – Jul 2026</div>
+                <div class="roadmap-content">
+                    <h4>First ML Projects <span class="badge badge-planned">Planned</span></h4>
+                    <p>NumPy, Pandas, Scikit-learn · House Price Predictor · Titanic classifier</p>
+                </div>
+            </div>
+            <div class="roadmap-item">
+                <div class="roadmap-time">Jul – Oct 2026</div>
+                <div class="roadmap-content">
+                    <h4>Deep Learning <span class="badge badge-planned">Planned</span></h4>
+                    <p>PyTorch · CNNs · fast.ai course · image classifier with live demo</p>
+                </div>
+            </div>
+            <div class="roadmap-item">
+                <div class="roadmap-time">Oct 2026 – Mar 2027</div>
+                <div class="roadmap-content">
+                    <h4>NLP + Internship Applications <span class="badge badge-planned">Planned</span></h4>
+                    <p>Hugging Face · BERT fine-tuning · Kaggle competitions · internship hunt</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section>
+        <div class="section-header"><h2>Projects</h2></div>
+        <div class="projects-grid">
+
+            <!-- REAL project -->
+            <div class="project-card live">
+                <div class="project-top">
+                    <div class="project-name">📄 Portfolio Website</div>
+                    <div class="project-status status-live">Live</div>
+                </div>
+                <p class="project-desc">
+                    My first web project — built with pure HTML and CSS. This is the site you're
+                    looking at right now. Simple, honest, and the starting point of everything.
+                </p>
+                <div class="project-tags">
+                    <span class="tag">HTML</span>
+                    <span class="tag">CSS</span>
+                    <span class="tag">GitHub Pages</span>
+                </div>
+                <a href="https://github.com/satyanandh-ai" class="project-link" target="_blank">
+                    View on GitHub →
+                </a>
+            </div>
+
+            <!-- IN PROGRESS -->
+            <div class="project-card">
+                <div class="project-top">
+                    <div class="project-name">🐍 Python Learning Journey</div>
+                    <div class="project-status status-building">In Progress</div>
+                </div>
+                <p class="project-desc">
+                    Daily Python practice log — solutions to CS50P problem sets, exercises on
+                    data structures, OOP, and file handling. Updated every day.
+                </p>
+                <div class="project-tags">
+                    <span class="tag">Python</span>
+                    <span class="tag">CS50P</span>
+                    <span class="tag">Daily Commits</span>
+                </div>
+                <a href="https://github.com/satyanandh-ai/python-learning-journey" class="project-link" target="_blank">
+                    View on GitHub →
+                </a>
+            </div>
+
+            <!-- COMING SOON 1 -->
+            <div class="project-card project-coming">
+                <div class="project-top">
+                    <div class="project-name">🏠 House Price Predictor</div>
+                    <div class="project-status status-planned">Planned · May 2026</div>
+                </div>
+                <p class="project-desc">
+                    My first ML project — end-to-end regression pipeline using Scikit-learn
+                    with a live Streamlit UI. Kaggle dataset.
+                </p>
+                <div class="project-tags">
+                    <span class="tag">Python</span>
+                    <span class="tag">Scikit-learn</span>
+                    <span class="tag">Streamlit</span>
+                </div>
+            </div>
+
+            <!-- COMING SOON 2 -->
+            <div class="project-card project-coming">
+                <div class="project-top">
+                    <div class="project-name">🖼️ Image Classifier</div>
+                    <div class="project-status status-planned">Planned · Sep 2026</div>
+                </div>
+                <p class="project-desc">
+                    Deep learning image classifier using PyTorch and a pre-trained ResNet model.
+                    Deployed on Hugging Face Spaces with a drag-and-drop demo.
+                </p>
+                <div class="project-tags">
+                    <span class="tag">PyTorch</span>
+                    <span class="tag">CNN</span>
+                    <span class="tag">Hugging Face</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- CONNECT -->
+    <section>
+        <div class="section-header"><h2>Connect</h2></div>
+        <div class="connect-grid">
+            <a href="https://github.com/satyanandh-ai" target="_blank" class="connect-card">
+                <div class="connect-icon">🐙</div>
+                <div class="connect-info">
+                    <div class="connect-name">GitHub</div>
+                    <div class="connect-sub">satyanandh-ai</div>
+                </div>
+            </a>
+            <a href="#" class="connect-card">
+                <div class="connect-icon">💼</div>
+                <div class="connect-info">
+                    <div class="connect-name">LinkedIn</div>
+                    <div class="connect-sub">Add your link</div>
+                </div>
+            </a>
+            <a href="mailto:your@email.com" class="connect-card">
+                <div class="connect-icon">✉️</div>
+                <div class="connect-info">
+                    <div class="connect-name">Email</div>
+                    <div class="connect-sub">your@email.com</div>
+                </div>
+            </a>
+            <a href="#" class="connect-card">
+                <div class="connect-icon">📄</div>
+                <div class="connect-info">
+                    <div class="connect-name">Resume</div>
+                    <div class="connect-sub">Coming soon</div>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-left">
+            built by <span>satyanandh-ai</span> · march 2026
+        </div>
+        <div class="footer-quote">"Starting from zero. Building in public."</div>
+    </footer>
+
+</div>
+</body>
+</html>
